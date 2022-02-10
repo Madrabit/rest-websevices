@@ -39,5 +39,14 @@ public class UserController {
                 .buildAndExpand(savedUser.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
+
+    @DeleteMapping("/users/{id}")
+    public User deleteUser(@PathVariable int id) {
+        final User user = service.delete(id);
+        if (user == null) {
+            throw new UserNotFoundException("User not found by id " + id);
+        }
+        return user;
+    }
 }
 
