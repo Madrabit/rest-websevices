@@ -1,7 +1,10 @@
 package ru.madrabit.restwebsevices.user;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 
@@ -25,8 +28,12 @@ public class UserController {
     }
 
     @PostMapping("/users/")
-    public void saveUser(@RequestBody User user) {
-        final User save = service.save(user);
+    public ResponseEntity<Object> saveUser(@RequestBody User user) {
+        final User savedUser = service.save(user);
+        final URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(savedUser.getId()).toUri();
+        return ResponseEntity.created(location).build();
     }
 }
 
