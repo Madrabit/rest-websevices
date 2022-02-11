@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/users/")
-    public ResponseEntity<Object> saveUser(@RequestBody User user) {
+    public ResponseEntity<Object> saveUser(@Valid @RequestBody User user) {
         final User savedUser = service.save(user);
         final URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

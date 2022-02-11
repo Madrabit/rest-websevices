@@ -1,10 +1,16 @@
 package ru.madrabit.restwebsevices.user;
 
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class User {
     private int id;
+
+    @Size(min=2, message = "Length of name should be more the 2")
     private String name;
+
+    @Past
     private Date birthDate;
 
     public User(int id, String name, Date birthDate) {
