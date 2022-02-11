@@ -1,5 +1,8 @@
 package ru.madrabit.restwebsevices.user;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -7,6 +10,7 @@ import java.util.Date;
 public class User {
     private int id;
 
+    @ApiModelProperty(notes ="Length of name should be more the 2")
     @Size(min=2, message = "Length of name should be more the 2")
     private String name;
 
