@@ -1,14 +1,18 @@
 package ru.madrabit.restwebsevices.user;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.List;
+import java.util.Collections;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -24,8 +28,14 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<User> retrieveAllUsers() {
-        return service.findAll();
+    public MappingJacksonValue retrieveAllUsers() {
+        final SimpleBeanPropertyFilter.FilterExceptFilter filter = new SimpleBeanPropertyFilter
+                .FilterExceptFilter(Collections.singleton("name"));
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("UserDTOFilter", filter);
+        MappingJacksonValue mapping = new MappingJacksonValue(service.findAll());
+        mapping.setFilters(filters);
+        return mapping;
     }
 
     @GetMapping("/users/{id}")

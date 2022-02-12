@@ -1,5 +1,6 @@
 package ru.madrabit.restwebsevices.user;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -7,7 +8,9 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
+@JsonFilter("UserDTOFilter")
 public class User {
+
     private int id;
 
     @ApiModelProperty(notes ="Length of name should be more the 2")
