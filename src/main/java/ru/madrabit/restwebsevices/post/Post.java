@@ -1,12 +1,21 @@
 package ru.madrabit.restwebsevices.post;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ru.madrabit.restwebsevices.user.User;
 
+import javax.persistence.*;
+
+@Entity
 public class Post {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String header;
     private String text;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private User user;
 
     public Post(int id, String header, String text, User user) {

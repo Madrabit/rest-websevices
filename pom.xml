@@ -11,7 +11,7 @@
     <groupId>ru.madrabit</groupId>
     <artifactId>rest-websevices</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>rest-websevices</name>
+    <name>rest-webservices</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>

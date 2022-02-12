@@ -3,14 +3,22 @@ package ru.madrabit.restwebsevices.user;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.web.bind.annotation.GetMapping;
+import ru.madrabit.restwebsevices.post.Post;
 
+import javax.persistence.*;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-@JsonFilter("UserDTOFilter")
+//@JsonFilter("UserDTOFilter")
+@Entity
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ApiModelProperty(notes ="Length of name should be more the 2")
@@ -19,6 +27,9 @@ public class User {
 
     @Past
     private Date birthDate;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
 
     public User(int id, String name, Date birthDate) {
         this.id = id;
@@ -51,6 +62,14 @@ public class User {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Post post) {
+        this.posts.add(post);
     }
 
     @Override
